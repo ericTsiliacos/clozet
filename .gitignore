@@ -1,1 +1,2 @@
-spec/logs/
+spec/logs/server.err
+spec/logs/server.out
