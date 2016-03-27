@@ -2,36 +2,47 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (on, targetValue, onClick)
 
-type alias Model = { clothing : List String, currentTitle : String }
+type Route = WatchList | AddNewClothing
 
-type Action = AddClothing | UpdateTitleInput String | NoOp
+type alias Model = { clothing : List String, currentTitle : String, route : Route }
+
+type Action = NoOp | AddClothing | UpdateTitleInput String | RouteTo Route
 
 update : Action -> Model -> Model
 update action model =
   case action of
+    RouteTo nextRoute -> { model | route = nextRoute }
     UpdateTitleInput title -> { model | currentTitle = title }
-    AddClothing -> { model | clothing = model.clothing ++ [model.currentTitle] }
+    AddClothing -> {
+      model | clothing = model.clothing ++ [model.currentTitle], route = WatchList
+    }
     NoOp -> model
 
 view : Signal.Address Action -> Model -> Html
 view address model =
+  let mainDisplay =
+    case model.route of
+      WatchList -> clothingWatchList model
+      AddNewClothing -> addingClothingForm address
+  in div []
+     [
+       navigation address
+     , mainDisplay
+     ]
+
+navigation : Signal.Address Action -> Html
+navigation address =
   div []
   [
-    navigation
-  , addingClothingForm address model
-  , clothingWatchList model
+    button [id "add"
+           , onClick address (RouteTo AddNewClothing)
+           ]
+           [ text "+" ]
   ]
 
-navigation : Html
-navigation =
-  div []
-  [
-    button [id "add"] [ text "+" ]
-  ]
-
-addingClothingForm : Signal.Address Action -> Model -> Html
-addingClothingForm address model =
-  div []
+addingClothingForm : Signal.Address Action -> Html
+addingClothingForm address =
+  div [id "watch_clothing"]
   [
     clothingTitleField address
   , button [onClick address AddClothing] [ text  "Watch" ]
@@ -53,7 +64,7 @@ onInput address contentToValue =
   on "input" targetValue (\str -> Signal.message address (contentToValue str))
 
 initialModel : Model
-initialModel = { clothing = [], currentTitle = "" }
+initialModel = { clothing = [], currentTitle = "", route = WatchList }
 
 actions : Signal.Mailbox Action
 actions = Signal.mailbox NoOp
