@@ -1,7 +1,12 @@
-task :default => [:test]
+task :default => [:tests]
 
 desc 'run acceptance, backend, and frontend tests'
-task :test do
+task :tests do
+  Dir.chdir 'frontend' do
+    puts 'running frontend test...'
+    system 'elm-test tests/TestRunner.elm'
+  end
+
   Dir.chdir 'frontend' do
     puts 'compiling frontend...'
     system 'elm-make ./src/Main.elm --output=../backend/public/index.html'
