@@ -9,7 +9,7 @@ import Task
 import Tests
 
 console : IO ()
-console = consoleRunner Tests.all
+console = consoleRunner Tests.tests
 
 port runner : Signal (Task.Task x ())
 port runner = run console

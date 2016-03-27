@@ -1,15 +1,13 @@
 module Tests where
 
-import ElmTest exposing (..)
+import ElmTestBDDStyle exposing (..)
 
-import String
+tests : Test
+tests =
+  describe "A Test Suite"
+    [ it "adds two numbers" <|
+        expect (3 + 7) toBe 10
 
-
-all : Test
-all =
-    suite "A Test Suite"
-        [
-            test "Addition" (assertEqual (3 + 7) 10),
-            test "String.left" (assertEqual "a" (String.left 1 "abcdefg")),
-            test "This test should Pass" (assert True)
-        ]
+    , it "passes for non-sense stuff" <|
+        expect True toBe True
+    ]
