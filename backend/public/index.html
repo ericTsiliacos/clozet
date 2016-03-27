@@ -10247,38 +10247,6 @@ Elm.Html.Events.make = function (_elm) {
                                     ,targetChecked: targetChecked
                                     ,keyCode: keyCode
                                     ,Options: Options};
-};Elm.StartApp = Elm.StartApp || {};
-Elm.StartApp.Simple = Elm.StartApp.Simple || {};
-Elm.StartApp.Simple.make = function (_elm) {
-   "use strict";
-   _elm.StartApp = _elm.StartApp || {};
-   _elm.StartApp.Simple = _elm.StartApp.Simple || {};
-   if (_elm.StartApp.Simple.values) return _elm.StartApp.Simple.values;
-   var _U = Elm.Native.Utils.make(_elm),
-   $Basics = Elm.Basics.make(_elm),
-   $Debug = Elm.Debug.make(_elm),
-   $Html = Elm.Html.make(_elm),
-   $List = Elm.List.make(_elm),
-   $Maybe = Elm.Maybe.make(_elm),
-   $Result = Elm.Result.make(_elm),
-   $Signal = Elm.Signal.make(_elm);
-   var _op = {};
-   var start = function (config) {
-      var update = F2(function (maybeAction,model) {
-         var _p0 = maybeAction;
-         if (_p0.ctor === "Just") {
-               return A2(config.update,_p0._0,model);
-            } else {
-               return _U.crashCase("StartApp.Simple",{start: {line: 91,column: 7},end: {line: 96,column: 52}},_p0)("This should never happen.");
-            }
-      });
-      var actions = $Signal.mailbox($Maybe.Nothing);
-      var address = A2($Signal.forwardTo,actions.address,$Maybe.Just);
-      var model = A3($Signal.foldp,update,config.model,actions.signal);
-      return A2($Signal.map,config.view(address),model);
-   };
-   var Config = F3(function (a,b,c) {    return {model: a,view: b,update: c};});
-   return _elm.StartApp.Simple.values = {_op: _op,Config: Config,start: start};
 };Elm.Main = Elm.Main || {};
 Elm.Main.make = function (_elm) {
    "use strict";
@@ -10293,9 +10261,9 @@ Elm.Main.make = function (_elm) {
    $List = Elm.List.make(_elm),
    $Maybe = Elm.Maybe.make(_elm),
    $Result = Elm.Result.make(_elm),
-   $Signal = Elm.Signal.make(_elm),
-   $StartApp$Simple = Elm.StartApp.Simple.make(_elm);
+   $Signal = Elm.Signal.make(_elm);
    var _op = {};
+   var initialModel = {clothing: _U.list([]),currentTitle: ""};
    var onInput = F2(function (address,contentToValue) {
       return A3($Html$Events.on,"input",$Html$Events.targetValue,function (str) {    return A2($Signal.message,address,contentToValue(str));});
    });
@@ -10313,6 +10281,8 @@ Elm.Main.make = function (_elm) {
          default: return model;}
    });
    var NoOp = {ctor: "NoOp"};
+   var actions = $Signal.mailbox(NoOp);
+   var model = A3($Signal.foldp,update,initialModel,actions.signal);
    var UpdateTitleInput = function (a) {    return {ctor: "UpdateTitleInput",_0: a};};
    var clothingTitleField = function (address) {
       return A2($Html.input,_U.list([$Html$Attributes.placeholder("Clothing Description"),A2(onInput,address,UpdateTitleInput)]),_U.list([]));
@@ -10321,12 +10291,12 @@ Elm.Main.make = function (_elm) {
    var addingClothingForm = F2(function (address,model) {
       return A2($Html.div,
       _U.list([]),
-      _U.list([clothingTitleField(address),A2($Html.button,_U.list([A2($Html$Events.onClick,address,AddClothing)]),_U.list([$Html.text("Save")]))]));
+      _U.list([clothingTitleField(address),A2($Html.button,_U.list([A2($Html$Events.onClick,address,AddClothing)]),_U.list([$Html.text("Watch")]))]));
    });
    var view = F2(function (address,model) {
       return A2($Html.div,_U.list([]),_U.list([navigation,A2(addingClothingForm,address,model),clothingWatchList(model)]));
    });
-   var main = $StartApp$Simple.start({model: {clothing: _U.list([]),currentTitle: ""},view: view,update: update});
+   var main = A2($Signal.map,view(actions.address),model);
    var Model = F2(function (a,b) {    return {clothing: a,currentTitle: b};});
    return _elm.Main.values = {_op: _op
                              ,Model: Model
@@ -10340,5 +10310,8 @@ Elm.Main.make = function (_elm) {
                              ,clothingTitleField: clothingTitleField
                              ,clothingWatchList: clothingWatchList
                              ,onInput: onInput
+                             ,initialModel: initialModel
+                             ,actions: actions
+                             ,model: model
                              ,main: main};
 };</script></head><body><script type="text/javascript">Elm.fullscreen(Elm.Main)</script></body></html>

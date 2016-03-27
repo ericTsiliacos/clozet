@@ -3,7 +3,7 @@ describe 'Adding a piece of clothing' do
     Capybara.page.visit '/'
     Capybara.find('#add').click
     Capybara.fill_in('Clothing Description', :with => 'my cool new shirt')
-    Capybara.click_button 'Save'
+    Capybara.click_button 'Watch'
 
     Capybara.within '#watch'  do
       expect(Capybara.page).to have_text('my cool new shirt')

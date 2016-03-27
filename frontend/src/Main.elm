@@ -1,7 +1,6 @@
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (on, targetValue, onClick)
-import StartApp.Simple as StartApp
 
 type alias Model = { clothing : List String, currentTitle : String }
 
@@ -35,7 +34,7 @@ addingClothingForm address model =
   div []
   [
     clothingTitleField address
-  , button [onClick address AddClothing] [ text  "Save" ]
+  , button [onClick address AddClothing] [ text  "Watch" ]
   ]
 
 clothingTitleField : Signal.Address Action -> Html
@@ -53,6 +52,15 @@ onInput : Signal.Address a -> (String -> a) -> Attribute
 onInput address contentToValue =
   on "input" targetValue (\str -> Signal.message address (contentToValue str))
 
+initialModel : Model
+initialModel = { clothing = [], currentTitle = "" }
+
+actions : Signal.Mailbox Action
+actions = Signal.mailbox NoOp
+
+model : Signal Model
+model = Signal.foldp update initialModel actions.signal
+
 main : Signal Html
-main = StartApp.start { model = { clothing = [], currentTitle = "" }, view = view, update = update }
+main = Signal.map (view actions.address) model
 
