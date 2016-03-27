@@ -4,6 +4,7 @@ require 'capybara/poltergeist'
 
 Capybara.run_server = false
 Capybara.current_driver = :poltergeist
+# Capybara.current_driver = :selenium
 Capybara.app_host = 'http://localhost:8080'
 
 RSpec.configure do |config|
