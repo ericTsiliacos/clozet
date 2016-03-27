@@ -42,12 +42,16 @@ clothingTitleField : Signal.Address Action -> Html
 clothingTitleField address =
   input
   [ placeholder "Clothing Description"
-  , on "input" targetValue (\str -> Signal.message address (UpdateTitleInput str))
+  , onInput address UpdateTitleInput
   ] []
 
 clothingWatchList : Model -> Html
 clothingWatchList model =
   ul [id "watch"] (List.map (\l -> li [] [ text l ]) model.clothing)
+
+onInput : Signal.Address a -> (String -> a) -> Attribute
+onInput address contentToValue =
+  on "input" targetValue (\str -> Signal.message address (contentToValue str))
 
 main : Signal Html
 main = StartApp.start { model = { clothing = [], currentTitle = "" }, view = view, update = update }

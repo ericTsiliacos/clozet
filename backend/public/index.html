@@ -10296,6 +10296,9 @@ Elm.Main.make = function (_elm) {
    $Signal = Elm.Signal.make(_elm),
    $StartApp$Simple = Elm.StartApp.Simple.make(_elm);
    var _op = {};
+   var onInput = F2(function (address,contentToValue) {
+      return A3($Html$Events.on,"input",$Html$Events.targetValue,function (str) {    return A2($Signal.message,address,contentToValue(str));});
+   });
    var clothingWatchList = function (model) {
       return A2($Html.ul,
       _U.list([$Html$Attributes.id("watch")]),
@@ -10312,10 +10315,7 @@ Elm.Main.make = function (_elm) {
    var NoOp = {ctor: "NoOp"};
    var UpdateTitleInput = function (a) {    return {ctor: "UpdateTitleInput",_0: a};};
    var clothingTitleField = function (address) {
-      return A2($Html.input,
-      _U.list([$Html$Attributes.placeholder("Clothing Description")
-              ,A3($Html$Events.on,"input",$Html$Events.targetValue,function (str) {    return A2($Signal.message,address,UpdateTitleInput(str));})]),
-      _U.list([]));
+      return A2($Html.input,_U.list([$Html$Attributes.placeholder("Clothing Description"),A2(onInput,address,UpdateTitleInput)]),_U.list([]));
    };
    var AddClothing = {ctor: "AddClothing"};
    var addingClothingForm = F2(function (address,model) {
@@ -10339,5 +10339,6 @@ Elm.Main.make = function (_elm) {
                              ,addingClothingForm: addingClothingForm
                              ,clothingTitleField: clothingTitleField
                              ,clothingWatchList: clothingWatchList
+                             ,onInput: onInput
                              ,main: main};
 };</script></head><body><script type="text/javascript">Elm.fullscreen(Elm.Main)</script></body></html>
