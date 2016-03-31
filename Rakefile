@@ -8,23 +8,24 @@ task :f do
   end
 end
 
-desc 'run acceptance, backend, and frontend tests'
-task :tests do
+desc 'run frontend tests'
+task :ft do
   Dir.chdir 'frontend' do
     puts 'running frontend test...'
     system 'elm-test tests/TestRunner.elm'
   end
+end
 
-  Dir.chdir 'frontend' do
-    puts 'compiling frontend...'
-    system 'elm-make ./src/Main.elm --output=../backend/public/index.html'
-  end
-
+desc 'run backend tests'
+task :bt do
   Dir.chdir 'backend' do
     puts `pwd`
     system 'stack test'
   end
+end
 
+desc 'run acceptance, backend, and frontend tests'
+task :tests => [:ft, :f, :bt] do
   Dir.chdir 'backend' do
     puts `pwd`
     puts 'compiling backend...'
@@ -40,12 +41,7 @@ task :tests do
 end
 
 desc 'run acceptance tests'
-task :at do
-  Dir.chdir 'frontend' do
-    puts 'compiling frontend...'
-    system 'elm-make ./src/Main.elm --output=../backend/public/index.html'
-  end
-
+task :at => [:f] do
   Dir.chdir 'backend' do
     puts `pwd`
     puts 'compiling backend...'
@@ -65,8 +61,6 @@ task :run do
   Dir.chdir 'backend' do
     puts `pwd`
     puts 'compiling backend...'
-    system 'stack build'
-
-    system("PORT=8080 .stack-work/dist/x86_64-osx/Cabal-1.22.5.0/build/clozet-exe/clozet-exe", :out => "../spec/logs/server.out", :err => "../spec/logs/server.err")
+    system("PORT=8080 cabal run")
   end
 end

@@ -13,9 +13,7 @@ update action model =
   case action of
     RouteTo nextRoute -> { model | route = nextRoute }
     UpdateTitleInput title -> { model | currentTitle = title }
-    AddClothing -> {
-      model | clothing = model.clothing ++ [model.currentTitle], route = WatchList
-    }
+    AddClothing -> { model | clothing = model.clothing ++ [model.currentTitle], route = WatchList }
     NoOp -> model
 
 view : Signal.Address Action -> Model -> Html
