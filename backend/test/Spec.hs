@@ -1,9 +1,10 @@
-{-# LANGUAGE OverloadedStrings, QuasiQuotes #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE QuasiQuotes       #-}
 module Main (main) where
 
-import Test.Hspec
-import Test.Hspec.Wai
-import Server (app)
+import           Server         (app)
+import           Test.Hspec
+import           Test.Hspec.Wai
 
 main :: IO ()
 main = hspec spec
@@ -13,4 +14,3 @@ spec = with app $ do
   describe "GET /" $ do
     it "responds with 200 'hello'" $ do
       get "/hello" `shouldRespondWith` "hello" {matchStatus = 200}
-
