@@ -43,16 +43,31 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update action model =
     case action of
         RouteTo nextRoute ->
-            ( { model | route = nextRoute }, Cmd.none )
+            ( { model
+                | route = nextRoute
+              }
+            , Cmd.none
+            )
 
         UpdateTitleInput title ->
-            ( { model | currentTitle = title }, Cmd.none )
+            ( { model
+                | currentTitle = title
+              }
+            , Cmd.none
+            )
 
         AddClothing ->
-            ( { model | clothing = model.clothing ++ [ model.currentTitle ], route = WatchList }, Cmd.none )
+            ( { model
+                | clothing = model.clothing ++ [ model.currentTitle ]
+                , route = WatchList
+              }
+            , Cmd.none
+            )
 
         NoOp ->
-            ( model, Cmd.none )
+            ( model
+            , Cmd.none
+            )
 
 
 view : Model -> Html Msg
