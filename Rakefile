@@ -61,7 +61,7 @@ task :at => [:f] do
 end
 
 desc 'run app'
-task :run do
+task :run => [:f] do
   Dir.chdir 'backend' do
     puts `pwd`
     puts 'compiling backend...'

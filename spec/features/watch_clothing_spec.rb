@@ -4,7 +4,7 @@ describe 'Adding a piece of clothing' do
 
     expect(page).to_not have_selector "#watch_clothing"
 
-    find('#add').click
+    click_button "+"
     expect(page).to have_selector "#watch_clothing"
 
     fill_in('Clothing Description', :with => 'my cool new shirt')

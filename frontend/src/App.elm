@@ -6,8 +6,11 @@ module App
         )
 
 import Html exposing (..)
-import Html.Attributes exposing (..)
+import Style exposing (..)
+import InlineHover exposing (hover)
+import Html.Attributes exposing (style, placeholder, id)
 import Html.Events exposing (onInput, onClick)
+import Html.Attributes exposing (style)
 
 
 type alias Model =
@@ -70,6 +73,10 @@ update action model =
             )
 
 
+
+-- view
+
+
 view : Model -> Html Msg
 view model =
     let
@@ -81,21 +88,36 @@ view model =
                 AddNewClothing ->
                     addingClothingForm
     in
-        div []
-            [ navigation
-            , mainDisplay
+        div [ mainContainerStyle ]
+            [ addClothingToWatchButton
+            , mainDisplay |> mainContentContainer
             ]
 
 
-navigation : Html Msg
-navigation =
-    div []
-        [ button
-            [ id "add"
-            , onClick (RouteTo AddNewClothing)
-            ]
-            [ text "+" ]
+mainContentContainer : Html Msg -> Html Msg
+mainContentContainer mainDisplay =
+    div
+        [ style [ width (pc 100) ]
         ]
+        [ header
+        , mainDisplay
+        ]
+
+
+addClothingToWatchButton : Html Msg
+addClothingToWatchButton =
+    hover addClothingButtonHoverStyle
+        button
+        [ addClothingButtonStyle
+        , onClick (RouteTo AddNewClothing)
+        ]
+        [ text "+" ]
+
+
+header : Html Msg
+header =
+    div [ style [ textAlign center ] ]
+        [ text "Clozet" ]
 
 
 addingClothingForm : Html Msg
@@ -118,3 +140,35 @@ clothingTitleField =
 clothingWatchList : Model -> Html Msg
 clothingWatchList model =
     ul [ id "watch" ] (List.map (\l -> li [] [ text l ]) model.clothing)
+
+
+
+-- styles
+
+
+mainContainerStyle : Attribute Msg
+mainContainerStyle =
+    style
+        [ display flex'
+        , width (pc 100)
+        , height (pc 100)
+        ]
+
+
+addClothingButtonStyle : Attribute Msg
+addClothingButtonStyle =
+    style
+        [ width (px 200)
+        , height (pc 100)
+        , border none
+        , color "#fff"
+        , backgroundColor "#6496c8"
+        , textShadow "-1px 1px #417cb8"
+        ]
+
+
+addClothingButtonHoverStyle : List ( String, String )
+addClothingButtonHoverStyle =
+    [ ( "background-color", "#346392" )
+    , ( "text-shadow", "-1px 1px #27496d" )
+    ]

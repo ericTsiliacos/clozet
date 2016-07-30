@@ -1,10 +1,11 @@
-{-# LANGUAGE OverloadedStrings, QuasiQuotes #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE QuasiQuotes       #-}
 module Server (runApp, app) where
 
-import Network.Wai (Application)
-import Network.Wai.Middleware.RequestLogger
-import System.Environment (getEnv)
-import qualified Web.Scotty as S
+import           Network.Wai                          (Application)
+import           Network.Wai.Middleware.RequestLogger
+import           System.Environment                   (getEnv)
+import qualified Web.Scotty                           as S
 
 app' :: S.ScottyM ()
 app' = do
