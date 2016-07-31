@@ -26,18 +26,20 @@ desc 'run backend tests'
 task :bt do
   Dir.chdir 'backend' do
     puts `pwd`
-    runCmd 'stack test'
+    runCmd 'stack test --fast'
   end
 end
 
-desc 'run acceptance, backend, and frontend tests'
-task :tests => [:ft, :f, :bt] do
+desc 'runs frontend, backend, and acceptance tests'
+task :test => [:ft, :f, :bt] do
   Dir.chdir 'backend' do
     puts `pwd`
     puts 'compiling backend...'
-    runCmd 'stack build'
+    runCmd 'stack build --fast'
 
     pid = spawn("PORT=8080 stack exec clozet-exe", :out => "../spec/logs/server.out", :err => "../spec/logs/server.err")
+
+    puts 'running acceptance tests...'
 
     puts `cd .. && rspec`
 
@@ -50,7 +52,7 @@ task :at => [:f] do
   Dir.chdir 'backend' do
     puts `pwd`
     puts 'compiling backend...'
-    runCmd 'stack build'
+    runCmd 'stack build --fast'
 
     pid = Process.spawn("PORT=8080 stack exec clozet-exe", :out => "../spec/logs/server.out", :err => "../spec/logs/server.err")
 
@@ -60,13 +62,12 @@ task :at => [:f] do
   end
 end
 
-desc 'run app'
-task :run => [:f] do
+desc 'runDev app'
+task :runDev => [:f] do
   Dir.chdir 'backend' do
     puts `pwd`
     puts 'compiling backend...'
-    system("stack install")
-    system("PORT=8080 clozet-exe")
+    system("stack build --fast && PORT=8080 closet-exe")
   end
 end
 
