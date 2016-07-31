@@ -1,28 +1,11 @@
 module ButtonStateStyle exposing (styleButtonStates)
 
-{-| Wrap any elements defined in [Html](http://package.elm-lang.org/packages/elm-lang/html/1.0.0/Html)
-# Make Special Elements
-@docs active
--}
-
 import Html exposing (text, node, Html, Attribute)
 import Html.Attributes exposing (attribute)
 import String
 import Char
 
 
-{-| Make a special element that can notice active state.
-```
-main =
-  ul []
-    [ active styles li [] [ text "Hello" ]
-    , active styles li [] [ text "World" ]
-    ]
-
-styles =
-  [("background", "#abd")]
-```
--}
 styleButtonStates :
     List ( String, String )
     -> List ( String, String )

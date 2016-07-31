@@ -7,10 +7,9 @@ module App
 
 import Html exposing (..)
 import Style exposing (..)
-import ButtonStateStyle exposing (styleButtonStates)
 import Html.Attributes exposing (style, placeholder, id)
 import Html.Events exposing (onInput, onClick)
-import Html.Attributes exposing (style)
+import Components.Button exposing (primaryButton)
 
 
 type alias Model =
@@ -89,7 +88,7 @@ view model =
                     addingClothingForm
     in
         div [ mainContainerStyle ]
-            [ addClothingToWatchButton
+            [ primaryButton "+" (RouteTo AddNewClothing)
             , mainDisplay |> mainContentContainer
             ]
 
@@ -102,18 +101,6 @@ mainContentContainer mainDisplay =
         [ header
         , mainDisplay
         ]
-
-
-addClothingToWatchButton : Html Msg
-addClothingToWatchButton =
-    styleButtonStates addClothingButtonInitialStyle
-        addClothingButtonActiveStyle
-        addClothingButtonHoverStyle
-        button
-        [ addClothingButtonStyle
-        , onClick (RouteTo AddNewClothing)
-        ]
-        [ text "+" ]
 
 
 header : Html Msg
@@ -155,37 +142,3 @@ mainContainerStyle =
         , width (pc 100)
         , height (pc 100)
         ]
-
-
-addClothingButtonStyle : Attribute Msg
-addClothingButtonStyle =
-    style
-        [ width (px 200)
-        , height (pc 100)
-        , border none
-        , color "#fff"
-        , backgroundColor "#6496c8"
-        , textShadow "-1px 1px #417cb8"
-        , fontSize (px 50)
-        ]
-
-
-addClothingButtonInitialStyle : List ( String, String )
-addClothingButtonInitialStyle =
-    [ backgroundColor "#6496c8"
-    , textShadow "-1px 1px #417cb8"
-    ]
-
-
-addClothingButtonHoverStyle : List ( String, String )
-addClothingButtonHoverStyle =
-    [ backgroundColor "#346392"
-    , textShadow "-1px 1px #27496d"
-    ]
-
-
-addClothingButtonActiveStyle : List ( String, String )
-addClothingButtonActiveStyle =
-    [ backgroundColor "#27496d"
-    , textShadow "-1px 1px #193047"
-    ]

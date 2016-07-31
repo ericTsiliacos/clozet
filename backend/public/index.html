@@ -8671,7 +8671,7 @@ var _seanhess$elm_style$Style$PrefixSet = F5(
 	function (a, b, c, d, e) {
 		return {ms: a, moz: b, o: c, webkit: d, $default: e};
 	});
-var _jinjor$elm_inline_hover$InlineHover$isValidChars = function (list) {
+var _ericTsiliacos$clozet$ButtonStateStyle$isValidChars = function (list) {
 	isValidChars:
 	while (true) {
 		var _p0 = list;
@@ -8691,7 +8691,7 @@ var _jinjor$elm_inline_hover$InlineHover$isValidChars = function (list) {
 		}
 	}
 };
-var _jinjor$elm_inline_hover$InlineHover$isValidKey = function (s) {
+var _ericTsiliacos$clozet$ButtonStateStyle$isValidKey = function (s) {
 	return (!_elm_lang$core$Native_Utils.eq(s, '')) && (A2(
 		_elm_lang$core$List$any,
 		_elm_lang$core$Char$isLower,
@@ -8704,7 +8704,7 @@ var _jinjor$elm_inline_hover$InlineHover$isValidKey = function (s) {
 		},
 		_elm_lang$core$String$toList(s)));
 };
-var _jinjor$elm_inline_hover$InlineHover$toCamelCase = function (s) {
+var _ericTsiliacos$clozet$ButtonStateStyle$toCamelCase = function (s) {
 	return _elm_lang$core$String$fromList(
 		_elm_lang$core$List$reverse(
 			_elm_lang$core$Basics$snd(
@@ -8737,7 +8737,7 @@ var _jinjor$elm_inline_hover$InlineHover$toCamelCase = function (s) {
 					},
 					_elm_lang$core$String$toList(s)))));
 };
-var _jinjor$elm_inline_hover$InlineHover$enterEach = function (_p5) {
+var _ericTsiliacos$clozet$ButtonStateStyle$enterEach = function (_p5) {
 	var _p6 = _p5;
 	var _p8 = _p6._0;
 	var escapedValue = function (_p7) {
@@ -8746,10 +8746,10 @@ var _jinjor$elm_inline_hover$InlineHover$enterEach = function (_p5) {
 			'\"',
 			A2(_elm_lang$core$String$split, '\'', _p7));
 	}(_p6._1);
-	var keyCamel = _jinjor$elm_inline_hover$InlineHover$toCamelCase(_p8);
+	var keyCamel = _ericTsiliacos$clozet$ButtonStateStyle$toCamelCase(_p8);
 	return A2(
 		_elm_lang$core$Basics_ops['++'],
-		'this.setAttribute(\'data-hover-',
+		'this.setAttribute(\'data-active-',
 		A2(
 			_elm_lang$core$Basics_ops['++'],
 			_p8,
@@ -8773,10 +8773,10 @@ var _jinjor$elm_inline_hover$InlineHover$enterEach = function (_p5) {
 									'=\'',
 									A2(_elm_lang$core$Basics_ops['++'], escapedValue, '\'')))))))));
 };
-var _jinjor$elm_inline_hover$InlineHover$leaveEach = function (_p9) {
+var _ericTsiliacos$clozet$ButtonStateStyle$leaveEach = function (_p9) {
 	var _p10 = _p9;
 	var _p11 = _p10._0;
-	var keyCamel = _jinjor$elm_inline_hover$InlineHover$toCamelCase(_p11);
+	var keyCamel = _ericTsiliacos$clozet$ButtonStateStyle$toCamelCase(_p11);
 	return A2(
 		_elm_lang$core$Basics_ops['++'],
 		'this.style.',
@@ -8785,47 +8785,85 @@ var _jinjor$elm_inline_hover$InlineHover$leaveEach = function (_p9) {
 			keyCamel,
 			A2(
 				_elm_lang$core$Basics_ops['++'],
-				'=this.getAttribute(\'data-hover-',
+				'=this.getAttribute(\'data-active-',
 				A2(_elm_lang$core$Basics_ops['++'], _p11, '\')||\'\';'))));
 };
-var _jinjor$elm_inline_hover$InlineHover$hover = F4(
-	function (styles, tag, attrs, children) {
-		var validStyles = A2(
+var _ericTsiliacos$clozet$ButtonStateStyle$styleButtonStates = F6(
+	function (initialStyles, activeStyles, hoverStyles, tag, attrs, children) {
+		var validHoverStyles = A2(
 			_elm_lang$core$List$filter,
 			function (_p12) {
 				var _p13 = _p12;
-				return _jinjor$elm_inline_hover$InlineHover$isValidKey(_p13._0);
+				return _ericTsiliacos$clozet$ButtonStateStyle$isValidKey(_p13._0);
 			},
-			styles);
-		var enter = A2(
+			hoverStyles);
+		var onHover = A2(
 			_elm_lang$html$Html_Attributes$attribute,
-			'onmouseenter',
+			'onmouseover',
 			A2(
 				_elm_lang$core$String$join,
 				';',
-				A2(_elm_lang$core$List$map, _jinjor$elm_inline_hover$InlineHover$enterEach, validStyles)));
-		var leave = A2(
+				A2(_elm_lang$core$List$map, _ericTsiliacos$clozet$ButtonStateStyle$enterEach, validHoverStyles)));
+		var onUp = A2(
 			_elm_lang$html$Html_Attributes$attribute,
-			'onmouseleave',
+			'onmouseup',
 			A2(
 				_elm_lang$core$String$join,
 				';',
-				A2(_elm_lang$core$List$map, _jinjor$elm_inline_hover$InlineHover$leaveEach, validStyles)));
+				A2(_elm_lang$core$List$map, _ericTsiliacos$clozet$ButtonStateStyle$leaveEach, validHoverStyles)));
+		var validActiveStyles = A2(
+			_elm_lang$core$List$filter,
+			function (_p14) {
+				var _p15 = _p14;
+				return _ericTsiliacos$clozet$ButtonStateStyle$isValidKey(_p15._0);
+			},
+			activeStyles);
+		var onDown = A2(
+			_elm_lang$html$Html_Attributes$attribute,
+			'onmousedown',
+			A2(
+				_elm_lang$core$String$join,
+				';',
+				A2(_elm_lang$core$List$map, _ericTsiliacos$clozet$ButtonStateStyle$enterEach, validActiveStyles)));
+		var validInitialStyles = A2(
+			_elm_lang$core$List$filter,
+			function (_p16) {
+				var _p17 = _p16;
+				return _ericTsiliacos$clozet$ButtonStateStyle$isValidKey(_p17._0);
+			},
+			initialStyles);
+		var onOut = A2(
+			_elm_lang$html$Html_Attributes$attribute,
+			'onmouseout',
+			A2(
+				_elm_lang$core$String$join,
+				';',
+				A2(_elm_lang$core$List$map, _ericTsiliacos$clozet$ButtonStateStyle$enterEach, validInitialStyles)));
 		return A2(
 			tag,
 			A2(
 				_elm_lang$core$Basics_ops['++'],
 				_elm_lang$core$Native_List.fromArray(
-					[enter, leave]),
+					[onDown, onHover, onUp, onOut]),
 				attrs),
 			children);
 	});
-var _ericTsiliacos$clozet$App$addClothingButtonHoverStyle = _elm_lang$core$Native_List.fromArray(
+var _ericTsiliacos$clozet$Components_Button$activeState = _elm_lang$core$Native_List.fromArray(
 	[
-		{ctor: '_Tuple2', _0: 'background-color', _1: '#346392'},
-		{ctor: '_Tuple2', _0: 'text-shadow', _1: '-1px 1px #27496d'}
+		_seanhess$elm_style$Style$backgroundColor('#27496d'),
+		_seanhess$elm_style$Style$textShadow('-1px 1px #193047')
 	]);
-var _ericTsiliacos$clozet$App$addClothingButtonStyle = _elm_lang$html$Html_Attributes$style(
+var _ericTsiliacos$clozet$Components_Button$hoveState = _elm_lang$core$Native_List.fromArray(
+	[
+		_seanhess$elm_style$Style$backgroundColor('#346392'),
+		_seanhess$elm_style$Style$textShadow('-1px 1px #27496d')
+	]);
+var _ericTsiliacos$clozet$Components_Button$initialState = _elm_lang$core$Native_List.fromArray(
+	[
+		_seanhess$elm_style$Style$backgroundColor('#6496c8'),
+		_seanhess$elm_style$Style$textShadow('-1px 1px #417cb8')
+	]);
+var _ericTsiliacos$clozet$Components_Button$baseStyle = _elm_lang$html$Html_Attributes$style(
 	_elm_lang$core$Native_List.fromArray(
 		[
 			_seanhess$elm_style$Style$width(
@@ -8835,8 +8873,28 @@ var _ericTsiliacos$clozet$App$addClothingButtonStyle = _elm_lang$html$Html_Attri
 			_seanhess$elm_style$Style$border(_seanhess$elm_style$Style$none),
 			_seanhess$elm_style$Style$color('#fff'),
 			_seanhess$elm_style$Style$backgroundColor('#6496c8'),
-			_seanhess$elm_style$Style$textShadow('-1px 1px #417cb8')
+			_seanhess$elm_style$Style$textShadow('-1px 1px #417cb8'),
+			_seanhess$elm_style$Style$fontSize(
+			_seanhess$elm_style$Style$px(50))
 		]));
+var _ericTsiliacos$clozet$Components_Button$primaryButton = F2(
+	function (content, msg) {
+		return A6(
+			_ericTsiliacos$clozet$ButtonStateStyle$styleButtonStates,
+			_ericTsiliacos$clozet$Components_Button$initialState,
+			_ericTsiliacos$clozet$Components_Button$activeState,
+			_ericTsiliacos$clozet$Components_Button$hoveState,
+			_elm_lang$html$Html$button,
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_ericTsiliacos$clozet$Components_Button$baseStyle,
+					_elm_lang$html$Html_Events$onClick(msg)
+				]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html$text(content)
+				]));
+	});
 var _ericTsiliacos$clozet$App$mainContainerStyle = _elm_lang$html$Html_Attributes$style(
 	_elm_lang$core$Native_List.fromArray(
 		[
@@ -8954,20 +9012,6 @@ var _ericTsiliacos$clozet$App$update = F2(
 var _ericTsiliacos$clozet$App$RouteTo = function (a) {
 	return {ctor: 'RouteTo', _0: a};
 };
-var _ericTsiliacos$clozet$App$addClothingToWatchButton = A4(
-	_jinjor$elm_inline_hover$InlineHover$hover,
-	_ericTsiliacos$clozet$App$addClothingButtonHoverStyle,
-	_elm_lang$html$Html$button,
-	_elm_lang$core$Native_List.fromArray(
-		[
-			_ericTsiliacos$clozet$App$addClothingButtonStyle,
-			_elm_lang$html$Html_Events$onClick(
-			_ericTsiliacos$clozet$App$RouteTo(_ericTsiliacos$clozet$App$AddNewClothing))
-		]),
-	_elm_lang$core$Native_List.fromArray(
-		[
-			_elm_lang$html$Html$text('+')
-		]));
 var _ericTsiliacos$clozet$App$UpdateTitleInput = function (a) {
 	return {ctor: 'UpdateTitleInput', _0: a};
 };
@@ -9016,7 +9060,10 @@ var _ericTsiliacos$clozet$App$view = function (model) {
 			[_ericTsiliacos$clozet$App$mainContainerStyle]),
 		_elm_lang$core$Native_List.fromArray(
 			[
-				_ericTsiliacos$clozet$App$addClothingToWatchButton,
+				A2(
+				_ericTsiliacos$clozet$Components_Button$primaryButton,
+				'+',
+				_ericTsiliacos$clozet$App$RouteTo(_ericTsiliacos$clozet$App$AddNewClothing)),
 				_ericTsiliacos$clozet$App$mainContentContainer(mainDisplay)
 			]));
 };
