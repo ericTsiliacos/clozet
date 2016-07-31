@@ -9,7 +9,7 @@ import Html exposing (..)
 import Style exposing (..)
 import Html.Attributes exposing (style, placeholder, id)
 import Html.Events exposing (onInput, onClick)
-import Components.Button exposing (primaryButton)
+import Components.Button exposing (primaryButton, secondaryButton)
 
 
 type alias Model =
@@ -88,7 +88,7 @@ view model =
                     addingClothingForm
     in
         div [ mainContainerStyle ]
-            [ primaryButton "+" (RouteTo AddNewClothing)
+            [ primaryButton (RouteTo AddNewClothing) "+"
             , mainDisplay |> mainContentContainer
             ]
 
@@ -113,7 +113,7 @@ addingClothingForm : Html Msg
 addingClothingForm =
     div [ id "watch_clothing" ]
         [ clothingTitleField
-        , button [ onClick AddClothing ] [ text "Watch" ]
+        , secondaryButton AddClothing "Watch"
         ]
 
 

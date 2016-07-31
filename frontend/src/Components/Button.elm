@@ -1,4 +1,8 @@
-module Components.Button exposing (primaryButton)
+module Components.Button
+    exposing
+        ( primaryButton
+        , secondaryButton
+        )
 
 import Html exposing (..)
 import Style exposing (..)
@@ -7,8 +11,8 @@ import Html.Attributes exposing (style)
 import ButtonStateStyle exposing (..)
 
 
-primaryButton : String -> msg -> Html msg
-primaryButton content msg =
+primaryButton : msg -> String -> Html msg
+primaryButton msg content =
     styleButtonStates initialState
         activeState
         hoveState
@@ -17,6 +21,15 @@ primaryButton content msg =
         , onClick msg
         ]
         [ text content ]
+
+
+secondaryButton : msg -> String -> Html msg
+secondaryButton msg content =
+    button [ onClick msg ] [ text content ]
+
+
+
+-- style
 
 
 baseStyle : Attribute msg
