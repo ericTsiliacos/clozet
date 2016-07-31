@@ -7,7 +7,7 @@ module App
 
 import Html exposing (..)
 import Style exposing (..)
-import InlineHover exposing (hover)
+import ButtonStateStyle exposing (styleButtonStates)
 import Html.Attributes exposing (style, placeholder, id)
 import Html.Events exposing (onInput, onClick)
 import Html.Attributes exposing (style)
@@ -106,7 +106,9 @@ mainContentContainer mainDisplay =
 
 addClothingToWatchButton : Html Msg
 addClothingToWatchButton =
-    hover addClothingButtonHoverStyle
+    styleButtonStates addClothingButtonInitialStyle
+        addClothingButtonActiveStyle
+        addClothingButtonHoverStyle
         button
         [ addClothingButtonStyle
         , onClick (RouteTo AddNewClothing)
@@ -164,11 +166,26 @@ addClothingButtonStyle =
         , color "#fff"
         , backgroundColor "#6496c8"
         , textShadow "-1px 1px #417cb8"
+        , fontSize (px 50)
         ]
+
+
+addClothingButtonInitialStyle : List ( String, String )
+addClothingButtonInitialStyle =
+    [ backgroundColor "#6496c8"
+    , textShadow "-1px 1px #417cb8"
+    ]
 
 
 addClothingButtonHoverStyle : List ( String, String )
 addClothingButtonHoverStyle =
-    [ ( "background-color", "#346392" )
-    , ( "text-shadow", "-1px 1px #27496d" )
+    [ backgroundColor "#346392"
+    , textShadow "-1px 1px #27496d"
+    ]
+
+
+addClothingButtonActiveStyle : List ( String, String )
+addClothingButtonActiveStyle =
+    [ backgroundColor "#27496d"
+    , textShadow "-1px 1px #193047"
     ]
