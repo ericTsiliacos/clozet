@@ -7,14 +7,16 @@ module App
 
 import Html exposing (..)
 import Style exposing (..)
+import Html.App as App
 import Html.Attributes exposing (style, placeholder, id)
 import Html.Events exposing (onInput, onClick)
-import Components.Button exposing (primaryButton, secondaryButton)
+import Component.Button exposing (primaryButton, secondaryButton)
+import Component.Field
 
 
 type alias Model =
     { clothing : List String
-    , currentTitle : String
+    , addClothingTextField : Component.Field.Model
     , route : Route
     }
 
@@ -22,7 +24,8 @@ type alias Model =
 init : ( Model, Cmd Msg )
 init =
     ( { clothing = []
-      , currentTitle = ""
+      , addClothingTextField =
+            Component.Field.init (Just "Clothing Description")
       , route = WatchList
       }
     , Cmd.none
@@ -37,7 +40,7 @@ type Route
 type Msg
     = NoOp
     | AddClothing
-    | UpdateTitleInput String
+    | UpdateClothingTextField Component.Field.Msg
     | RouteTo Route
 
 
@@ -51,17 +54,17 @@ update action model =
             , Cmd.none
             )
 
-        UpdateTitleInput title ->
+        AddClothing ->
             ( { model
-                | currentTitle = title
+                | clothing = model.clothing ++ [ Component.Field.currentInput model.addClothingTextField ]
+                , route = WatchList
               }
             , Cmd.none
             )
 
-        AddClothing ->
+        UpdateClothingTextField msg ->
             ( { model
-                | clothing = model.clothing ++ [ model.currentTitle ]
-                , route = WatchList
+                | addClothingTextField = Component.Field.update msg model.addClothingTextField
               }
             , Cmd.none
             )
@@ -85,7 +88,7 @@ view model =
                     clothingWatchList model
 
                 AddNewClothing ->
-                    addingClothingForm
+                    addingClothingForm model
     in
         div [ mainContainerStyle ]
             [ primaryButton (RouteTo AddNewClothing) "+"
@@ -109,21 +112,12 @@ header =
         [ text "Clozet" ]
 
 
-addingClothingForm : Html Msg
-addingClothingForm =
+addingClothingForm : Model -> Html Msg
+addingClothingForm model =
     div [ id "watch_clothing" ]
-        [ clothingTitleField
+        [ App.map UpdateClothingTextField (Component.Field.view model.addClothingTextField)
         , secondaryButton AddClothing "Watch"
         ]
-
-
-clothingTitleField : Html Msg
-clothingTitleField =
-    input
-        [ placeholder "Clothing Description"
-        , onInput UpdateTitleInput
-        ]
-        []
 
 
 clothingWatchList : Model -> Html Msg

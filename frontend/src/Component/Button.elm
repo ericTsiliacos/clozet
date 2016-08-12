@@ -1,4 +1,4 @@
-module Components.Button
+module Component.Button
     exposing
         ( primaryButton
         , secondaryButton
@@ -15,7 +15,7 @@ primaryButton : msg -> String -> Html msg
 primaryButton msg content =
     styleButtonStates initialState
         activeState
-        hoveState
+        hoverState
         button
         [ baseStyle
         , onClick msg
@@ -52,8 +52,8 @@ initialState =
     ]
 
 
-hoveState : List ( String, String )
-hoveState =
+hoverState : List ( String, String )
+hoverState =
     [ backgroundColor "#346392"
     , textShadow "-1px 1px #27496d"
     ]
