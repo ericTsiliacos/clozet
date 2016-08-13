@@ -35,7 +35,7 @@ secondaryButton msg content =
 baseStyle : Attribute msg
 baseStyle =
     style
-        [ width (px 200)
+        [ width (px 100)
         , height (pc 100)
         , border none
         , color "#fff"

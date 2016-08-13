@@ -82,7 +82,7 @@ update action model =
 view : Model -> Html Msg
 view model =
     let
-        mainDisplay =
+        page =
             case model.route of
                 WatchList ->
                     clothingWatchList model
@@ -90,16 +90,16 @@ view model =
                 AddNewClothing ->
                     addingClothingForm model
     in
-        div [ mainContainerStyle ]
-            [ primaryButton (RouteTo AddNewClothing) "+"
-            , mainDisplay |> mainContentContainer
-            ]
+        page |> mainContentContainer
 
 
 mainContentContainer : Html Msg -> Html Msg
 mainContentContainer mainDisplay =
     div
-        [ style [ width (pc 100) ]
+        [ style
+            [ width (pc 100)
+            , height (pc 100)
+            ]
         ]
         [ header
         , mainDisplay
@@ -122,7 +122,10 @@ addingClothingForm model =
 
 clothingWatchList : Model -> Html Msg
 clothingWatchList model =
-    ul [ id "watch" ] (List.map (\l -> li [] [ text l ]) model.clothing)
+    div [ mainContainerStyle ]
+        [ primaryButton (RouteTo AddNewClothing) "+"
+        , ul [ id "watch" ] (List.map (\l -> li [] [ text l ]) model.clothing)
+        ]
 
 
 
