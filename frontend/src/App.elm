@@ -17,7 +17,7 @@ import Component.Field
 type alias Model =
     { clothing : List String
     , addClothingTextField : Component.Field.Model
-    , route : Route
+    , page : Page
     }
 
 
@@ -26,13 +26,13 @@ init =
     ( { clothing = []
       , addClothingTextField =
             Component.Field.init (Just "Clothing Description")
-      , route = WatchList
+      , page = WatchList
       }
     , Cmd.none
     )
 
 
-type Route
+type Page
     = WatchList
     | AddNewClothing
 
@@ -41,15 +41,15 @@ type Msg
     = NoOp
     | AddClothing
     | UpdateClothingTextField Component.Field.Msg
-    | RouteTo Route
+    | NavigateTo Page
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update action model =
     case action of
-        RouteTo nextRoute ->
+        NavigateTo nextPage ->
             ( { model
-                | route = nextRoute
+                | page = nextPage
               }
             , Cmd.none
             )
@@ -57,7 +57,7 @@ update action model =
         AddClothing ->
             ( { model
                 | clothing = model.clothing ++ [ Component.Field.currentInput model.addClothingTextField ]
-                , route = WatchList
+                , page = WatchList
               }
             , Cmd.none
             )
@@ -83,7 +83,7 @@ view : Model -> Html Msg
 view model =
     let
         page =
-            case model.route of
+            case model.page of
                 WatchList ->
                     clothingWatchList model
 
@@ -123,7 +123,7 @@ addingClothingForm model =
 clothingWatchList : Model -> Html Msg
 clothingWatchList model =
     div [ mainContainerStyle ]
-        [ primaryButton (RouteTo AddNewClothing) "+"
+        [ primaryButton (NavigateTo AddNewClothing) "+"
         , ul [ id "watch" ] (List.map (\l -> li [] [ text l ]) model.clothing)
         ]
 
