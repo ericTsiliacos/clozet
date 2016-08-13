@@ -21,11 +21,15 @@ type alias Model =
     }
 
 
+initAddClothingTextField : Component.Field.Model
+initAddClothingTextField =
+    Component.Field.init (Just "Clothing Description")
+
+
 init : ( Model, Cmd Msg )
 init =
     ( { clothing = []
-      , addClothingTextField =
-            Component.Field.init (Just "Clothing Description")
+      , addClothingTextField = initAddClothingTextField
       , page = WatchList
       }
     , Cmd.none
@@ -57,6 +61,7 @@ update action model =
         AddClothing ->
             ( { model
                 | clothing = model.clothing ++ [ Component.Field.currentInput model.addClothingTextField ]
+                , addClothingTextField = initAddClothingTextField
                 , page = WatchList
               }
             , Cmd.none
