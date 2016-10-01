@@ -62,12 +62,12 @@ task :at => [:f] do
   end
 end
 
-desc 'runDev app'
-task :runDev => [:f] do
+desc 'run app'
+task :run => [:f] do
   Dir.chdir 'backend' do
     puts `pwd`
     puts 'compiling backend...'
-    system("stack build --fast && PORT=8080 closet-exe")
+    system("stack build --fast && PORT=8080 clozet-exe")
   end
 end
 
